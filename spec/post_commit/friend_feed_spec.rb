@@ -17,6 +17,11 @@ describe PostCommit::Hooks::FriendFeed do
     FakeWeb.should have_requested(:post, @url)
   end
 
+  it "should recover from unknown exceptions" do
+    Net::HTTP.should_receive(:new).and_raise(Exception)
+    subject.post("Some message").should be_false
+  end
+
   it "should return response as hash" do
     FakeWeb.register_uri(:post, @url, :status => ["200", "OK"], :body => body("friendfeed.json"))
     response = subject.post("Google", :url => "http://google.com")

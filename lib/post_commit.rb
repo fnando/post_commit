@@ -1,10 +1,8 @@
 require "json"
-require "nokogiri"
 require "net/http"
 require "uri"
 require "json"
 
-require "post_commit/base"
 require "post_commit/errors"
 require "post_commit/hooks"
 require "post_commit/hooks/base"

@@ -11,6 +11,11 @@ describe PostCommit::Hooks::LightHouse do
     hook.should be_an_instance_of(PostCommit::Hooks::LightHouse)
   end
 
+  it "should recover from unknown exceptions" do
+    Net::HTTP.should_receive(:new).and_raise(Exception)
+    subject.post("Some title", "Some message").should be_false
+  end
+
   it "should post notification" do
     FakeWeb.register_uri(:post, @url, :status => ["201", "Created"], :body => body("lighthouse.json"))
     subject.post("Some title", "Some message")

@@ -17,6 +17,11 @@ describe PostCommit::Hooks::Basecamp do
     FakeWeb.should have_requested(:post, @url)
   end
 
+  it "should recover from unknown exceptions" do
+    Net::HTTP.should_receive(:new).and_raise(Exception)
+    subject.post("Some title", "Some message").should be_false
+  end
+
   it "should post notification to secure url" do
     @url = "https://abc:x@mycompany.basecamphq.com/projects/666/posts.xml"
     subject.authorize :subdomain => "mycompany", :token => "abc", :project => 666, :ssl => true

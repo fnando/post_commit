@@ -24,7 +24,7 @@ module PostCommit
       end
 
       def post(options = {}) # :nodoc:
-        raise AbstractMethodError
+        raise PostCommit::AbstractMethodError
       end
     end
   end

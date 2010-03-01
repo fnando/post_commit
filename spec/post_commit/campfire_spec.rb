@@ -11,6 +11,11 @@ describe PostCommit::Hooks::Campfire do
     hook.should be_an_instance_of(PostCommit::Hooks::Campfire)
   end
 
+  it "should recover from unknown exceptions" do
+    Net::HTTP.should_receive(:new).and_raise(Exception)
+    subject.post("Some message").should be_false
+  end
+
   it "should post notification" do
     FakeWeb.register_uri(:post, @url, :status => ["201", "Created"], :body => body("campfire.json"))
     subject.post("Hi Campfire!")

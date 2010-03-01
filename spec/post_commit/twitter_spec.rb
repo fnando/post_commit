@@ -14,6 +14,11 @@ describe PostCommit::Hooks::Twitter do
     doing { subject.post("Invalid", :type => :invalid) }.should raise_error(PostCommit::InvalidOptionError)
   end
 
+  it "should recover from unknown exceptions" do
+    Net::HTTP.should_receive(:new).and_raise(Exception)
+    subject.post("Some message").should be_false
+  end
+
   context "public messages" do
     before do
       @url = "http://johndoe:test@twitter.com/statuses/update.json"

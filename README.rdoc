@@ -10,6 +10,12 @@ Post commit allows you to notify several services with simple and elegant DSL. I
 
 = Usage
 
+To install Post Commit run the command
+
+  sudo gem install post_commit
+
+and you're good to go!
+
 == Basecamp
 
 To send a Basecamp message you have to inform your subdomain, API token and project id.

@@ -122,6 +122,9 @@ You can use the <tt>credentials</tt> attribute to retrieve these settings.
 
 * Receive post commits
 * URL hook must post JSON and XML data
+* Create IRC hook
+* Create Jabber hook
+* Create email hook
 
 = Maintainer
 

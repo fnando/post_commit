@@ -1,0 +1,127 @@
+= Introduction
+
+Post commit allows you to notify several services with simple and elegant DSL. It currently supports 5 services:
+
+* Basecamp
+* Campfire
+* FriendFeed
+* LightHouse
+* Twitter
+
+= Usage
+
+== Basecamp
+
+To send a Basecamp message you have to inform your subdomain, API token and project id.
+
+  post_commit :basecamp do
+    authorize :subdomain => "mycompany", :token => "492bfe53dcd3", :project => 12345, :ssl => true
+    post "Some title", "Some message"
+  end
+
+== Campfire
+
+To send a Campfire message you have to inform your subdomain, API token and room id.
+
+  post_commit :campfire do
+    authorize :subdomain => "mycompany", :token => "ec930a0f7fb1", :room => 12345
+    post "Some message"
+  end
+
+The Campfire hook supports 3 message types: <tt>text</tt>, <tt>paste</tt> and <tt>twitter</tt>.
+
+  post "Some message"
+  post "Some message", :type => :text
+  post "Some pasted code", :type => :paste
+  post "http://twitter.com/johndoe/statuses/12345", :type => :twitter
+
+== FriendFeed
+
+To send a FriendFeed message you have to inform your username and API token.
+
+  post_commit :friendfeed do
+    authorize :username => "johndoe", :token => "wow39dupa"
+    post "Check it out this page", :url => "http://example.com"
+  end
+
+== LightHouse
+
+To send a LightHouse message you have to inform your subdomain, API token and project id.
+
+  post_commit :lighthouse do
+    authorize :subdomain => "mycompany", :token => "2aad05e8b", :project => 12345
+    post "Some title", "Some message"
+  end
+
+== Twitter
+
+To send a Twitter message you have to inform your username and password.
+
+  post_commit :twitter do
+    authorize :username => "johndoe", :password => "mypass"
+    post "Hi Twitter!"
+  end
+
+The Twitter hook supports public and direct messages.
+
+  post "Hi Twitter!"
+  post "Hi Twitter!", :type => :status
+  post "Mary, check this out! http://example.com", :type => :direct_message, :screen_name => "marydoe"
+  post "Mary, check this out! http://example.com", :type => :direct_message, :user_id => 12345
+
+= Creating new hooks
+
+To create a new hook, you can extend the <tt>PostCommit::Hooks::Base</tt> class, to bootstrap your own class.
+
+  class Email < PostCommit::Hooks::Base
+    def post(message, to)
+      ActionMailer::Base.smtp_settings = credentials
+
+      # send the message
+    end
+  end
+
+To register this new hook, you just have to call the <tt>PostCommit::Hooks.register</tt> method.
+
+  PostCommit::Hooks.register :email, Email
+
+Then you can use it through the <tt>post_commit</tt> method.
+
+  post_commit :email do
+    authorize :address => "example.com", :user_name => "noreply", :password => "mypass", :authentication => :plain
+    post "Some message", "mary@doe.com"
+  end
+
+The <tt>authorize</tt> accepts anything you want. In this case, we're providing all SMTP info we want to use.
+You can use the <tt>credentials</tt> attribute to retrieve these settings.
+
+= To-Do
+
+* Receive post commits
+
+= Maintainer
+
+* Nando Vieira - http://simplesideias.com.br
+
+= License
+
+(The MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

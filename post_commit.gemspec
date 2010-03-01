@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{post_commit}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nando Vieira"]
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/post_commit/hooks/friend_feed.rb",
      "lib/post_commit/hooks/light_house.rb",
      "lib/post_commit/hooks/twitter.rb",
+     "lib/post_commit/hooks/url.rb",
      "lib/post_commit/version.rb",
      "spec/post_commit/base_spec.rb",
      "spec/post_commit/basecamp_spec.rb",
@@ -34,6 +35,7 @@ Gem::Specification.new do |s|
      "spec/post_commit/friend_feed_spec.rb",
      "spec/post_commit/light_house_spec.rb",
      "spec/post_commit/twitter_spec.rb",
+     "spec/post_commit/url_spec.rb",
      "spec/resources/controllers.rb",
      "spec/resources/responses/campfire.json",
      "spec/resources/responses/friendfeed.json",
@@ -53,6 +55,7 @@ Gem::Specification.new do |s|
      "spec/post_commit/friend_feed_spec.rb",
      "spec/post_commit/light_house_spec.rb",
      "spec/post_commit/twitter_spec.rb",
+     "spec/post_commit/url_spec.rb",
      "spec/resources/controllers.rb",
      "spec/spec_helper.rb"
   ]

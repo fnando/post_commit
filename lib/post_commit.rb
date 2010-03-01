@@ -11,13 +11,8 @@ require "post_commit/hooks/campfire"
 require "post_commit/hooks/friend_feed"
 require "post_commit/hooks/light_house"
 require "post_commit/hooks/twitter"
+require "post_commit/hooks/url"
 require "post_commit/version"
-
-PostCommit::Hooks.register :basecamp, PostCommit::Hooks::Basecamp
-PostCommit::Hooks.register :campfire, PostCommit::Hooks::Campfire
-PostCommit::Hooks.register :friendfeed, PostCommit::Hooks::FriendFeed
-PostCommit::Hooks.register :lighthouse, PostCommit::Hooks::LightHouse
-PostCommit::Hooks.register :twitter, PostCommit::Hooks::Twitter
 
 # Send a notification to the specified service. This method is just
 # a shorcut to the PostCommit::Hooks module.

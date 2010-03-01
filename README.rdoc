@@ -7,6 +7,7 @@ Post commit allows you to notify several services with simple and elegant DSL. I
 * FriendFeed
 * LightHouse
 * Twitter
+* URL
 
 = Usage
 
@@ -75,6 +76,21 @@ The Twitter hook supports public and direct messages.
   post "Mary, check this out! http://example.com", :type => :direct_message, :screen_name => "marydoe"
   post "Mary, check this out! http://example.com", :type => :direct_message, :user_id => 12345
 
+== URL
+
+To send a message to an arbitrary URL, use the <tt>:url</tt>.
+
+    post_commit :url do
+      post "http://example.com", :status => "pending", :id => 1234, :service => "yourapp"
+    end
+
+If you need a basic authorization, just inform the <tt>username</tt> and <tt>password</tt>.
+
+    post_commit :url do
+      authorize :username => "johndoe", :password => "mypass"
+      post "http://example.com", :status => "running", :id => 1234, :service => "yourapp"
+    end
+
 = Creating new hooks
 
 To create a new hook, you can extend the <tt>PostCommit::Hooks::Base</tt> class, to bootstrap your own class.
@@ -87,7 +103,8 @@ To create a new hook, you can extend the <tt>PostCommit::Hooks::Base</tt> class,
     end
   end
 
-To register this new hook, you just have to call the <tt>PostCommit::Hooks.register</tt> method.
+Your new hook will be register automatically. By downcasing the class name. So, <tt>LightHouse</tt> will be registered as <tt>:lighthouse</tt>.
+To register this hook will other name, you just have to call the <tt>PostCommit::Hooks.register</tt> method.
 
   PostCommit::Hooks.register :email, Email
 
@@ -104,10 +121,23 @@ You can use the <tt>credentials</tt> attribute to retrieve these settings.
 = To-Do
 
 * Receive post commits
+* URL hook must post JSON and XML data
 
 = Maintainer
 
 * Nando Vieira - http://simplesideias.com.br
+
+= Contributing
+
+Once you've made your great commits:
+
+1.  Fork[http://help.github.com/forking/] the project at http://github.com/fnando/post_commit
+2. Create a topic branch - <tt>git checkout -b my_branch</tt>
+3. Push to your branch - <tt>git push origin my_branch</tt>
+4. Create an Issue[http://github.com/fnando/post_commit/issues] with a link to your branch
+5. That's it!
+
+Please respect the indentation rules. And always use 2 spaces.
 
 = License
 

@@ -17,6 +17,10 @@ module PostCommit
         @credentials = {}
       end
 
+      def self.inherited(base)
+        PostCommit::Hooks.register base.name.split("::").last.downcase.to_sym, base
+      end
+
       # Set up the authorization for the current notifier.
       # Each notifier can have its own authorization options.
       def authorize(options = {})

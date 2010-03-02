@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nando Vieira"]
-  s.date = %q{2010-03-01}
+  s.date = %q{2010-03-02}
   s.description = %q{Five services are supported for now: Basecamp, Campfire, FriendFeed, LightHouse and Twitter.}
   s.email = %q{fnando.vieira@gmail.com}
   s.extra_rdoc_files = [

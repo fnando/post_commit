@@ -41,11 +41,54 @@ describe PostCommit::Hooks::URL do
     subject.post(@url, :message => "Some message").should be_true
   end
 
+  it "should return false with any status other than 2xx" do
+    FakeWeb.register_uri(:post, @url, :status => ["401", "Unauthorized"])
+
+    subject.post(@url, :message => "Some message").should be_false
+  end
+
   it "should set post data" do
     subject.post(@url, :message => "Some message", :id => 1234)
     body = CGI.parse(subject.request.body)
 
     body["message"].to_s.should == "Some message"
     body["id"].to_s.should == "1234"
+  end
+
+  context "data type" do
+    context "JSON string" do
+      before do
+        subject.set :data_type, :json
+        subject.post(@url, :message => {:title => "Some title", :body => "Some message"})
+      end
+
+      it "should encode body" do
+        body = JSON.parse(subject.request.body)
+
+        body["message"]["title"].should == "Some title"
+        body["message"]["body"].should == "Some message"
+      end
+
+      it "should set headers" do
+        subject.request.content_type.should == "application/json"
+      end
+    end
+
+    context "XML string" do
+      before do
+        subject.set :data_type, :xml
+        subject.post(@url, :message => {:title => "Some title", :body => "Some message"})
+      end
+
+      it "should encode body" do
+        xml = Nokogiri::XML(subject.request.body)
+        xml.at("message > title").inner_text.should == "Some title"
+        xml.at("message > body").inner_text.should == "Some message"
+      end
+
+      it "should set headers" do
+        subject.request.content_type.should == "application/xml"
+      end
+    end
   end
 end

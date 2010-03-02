@@ -6,6 +6,7 @@ require "post_commit"
 require "spec"
 require "fakeweb"
 require "fakeweb_matcher"
+require "nokogiri"
 
 FakeWeb.allow_net_connect = false
 

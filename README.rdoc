@@ -1,6 +1,6 @@
 = Introduction
 
-Post commit allows you to notify several services with simple and elegant DSL. It currently supports 5 services:
+Post commit allows you to notify several services with a simple and elegant DSL. It currently supports 5 services:
 
 * Basecamp
 * Campfire
@@ -80,16 +80,34 @@ The Twitter hook supports public and direct messages.
 
 To send a message to an arbitrary URL, use the <tt>:url</tt>.
 
-    post_commit :url do
-      post "http://example.com", :status => "pending", :id => 1234, :service => "yourapp"
-    end
+  post_commit :url do
+    post "http://example.com", :status => "pending", :id => 1234, :service => "yourapp"
+  end
 
 If you need a basic authorization, just inform the <tt>username</tt> and <tt>password</tt>.
 
-    post_commit :url do
-      authorize :username => "johndoe", :password => "mypass"
-      post "http://example.com", :status => "running", :id => 1234, :service => "yourapp"
-    end
+  post_commit :url do
+    authorize :username => "johndoe", :password => "mypass"
+    post "http://example.com", :status => "running", :id => 1234, :service => "yourapp"
+  end
+
+You can post data encoded as JSON or XML. Just set the <tt>:data_type</tt> option.
+
+  post_commit :url do
+    set :data_type, :json
+    set :data_type, :xml
+  end
+
+To post a XML, your params hash need to be a multi-level hash. For instance, the hash
+<tt>{:message => { :title => "Some title", :body => "Some message" }}</tt> will be converted to
+
+  <message>
+    <title>Some title</title>
+    <body>Some message</body>
+  </message>
+
+<b>Gotcha:</b> to send a normal POST, you have to specify a flat hash.
+So <tt>{:a => 1}</tt> is ok, but <tt>{:a => {:b => 1}}</tt> will fail.
 
 = Creating new hooks
 
@@ -121,10 +139,10 @@ You can use the <tt>credentials</tt> attribute to retrieve these settings.
 = To-Do
 
 * Receive post commits
-* URL hook must post JSON and XML data
 * Create IRC hook
 * Create Jabber hook
 * Create email hook
+* All hooks should use the <tt>:url</tt> hook
 
 = Maintainer
 

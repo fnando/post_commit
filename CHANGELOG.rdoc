@@ -8,3 +8,4 @@
 
 * Hooks are registered automatically
 * The URL hook can send JSON and XML
+* Released 0.1.1 version

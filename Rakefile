@@ -1,5 +1,5 @@
 require "rake"
-require "hanna/rdoctask"
+require "rake/rdoctask"
 require "spec/rake/spectask"
 require "jeweler"
 require "lib/post_commit/version"
@@ -11,7 +11,7 @@ desc "Run the specs"
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_opts = ["--colour --format specdoc --loadby mtime --reverse"]
   t.spec_files = FileList["spec/**/*_spec.rb"]
-  t.rcov_opts = ["--sort coverage", "--exclude .renv,.bundle,helper,errors.rb"]
+  t.rcov_opts = ["--sort coverage", "--exclude .gem,.bundle,helper"]
   t.rcov = true
 end
 

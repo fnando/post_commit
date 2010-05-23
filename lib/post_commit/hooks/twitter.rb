@@ -32,36 +32,36 @@ module PostCommit
       end
 
       private
-        # Send a public message
-        def status(message, options = {})
-          _request "http://twitter.com/statuses/update.json", options.merge(:status => message)
-        end
+      # Send a public message
+      def status(message, options = {})
+        _request "http://twitter.com/statuses/update.json", options.merge(:status => message)
+      end
 
-        # Send a private message.
-        # The user you're notifying should be following you.
-        def direct_message(message, options = {})
-          _request "http://twitter.com/direct_messages/new.json", options.merge(:text => message)
-        end
+      # Send a private message.
+      # The user you're notifying should be following you.
+      def direct_message(message, options = {})
+        _request "http://twitter.com/direct_messages/new.json", options.merge(:text => message)
+      end
 
-        # Send message to the specified url
-        def _request(url, options = {})
-          @uri = URI.parse(url)
-          http = Net::HTTP.new(uri.host, uri.port)
+      # Send message to the specified url
+      def _request(url, options = {})
+        @uri = URI.parse(url)
+        http = Net::HTTP.new(uri.host, uri.port)
 
-          @request = Net::HTTP::Post.new(uri.path)
-          @request.basic_auth credentials[:username], credentials[:password]
-          @request.form_data = options
+        @request = Net::HTTP::Post.new(uri.path)
+        @request.basic_auth credentials[:username], credentials[:password]
+        @request.form_data = options
 
-          @response = http.request(@request)
+        @response = http.request(@request)
 
-          if response.code == "200"
-            JSON.parse response.body
-          else
-            false
-          end
-        rescue Exception
+        if response.code == "200"
+          JSON.parse response.body
+        else
           false
         end
+      rescue Exception
+        false
+      end
     end
   end
 end

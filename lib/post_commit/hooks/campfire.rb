@@ -1,6 +1,6 @@
 module PostCommit
   module Hooks
-    # To send a Campifire post commit, you have to setup your subdomain, API token and room.
+    # To send a Campfire post commit, you have to setup your subdomain, API token and room.
     #
     #   post_commit :campfire do
     #     authorize :subdomain => "mycompany", :token => "TVfD8rB0x1sze8nZ4P1vaO5wOWM", :room => 666, :ssl => true

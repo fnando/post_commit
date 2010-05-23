@@ -1,15 +1,15 @@
 module PostCommit
   module Hooks
-    # To send a Campifire post commit, you have to setup your subdomain, API token and room.
+    # To send a LightHouse post commit, you have to setup your subdomain, API token and project id.
     #
     #   post_commit :lighthouse do
     #     authorize :subdomain => "mycompany", :project => 47533, :token => "TVfD8rB0x1sze8nZ4P1vaO5wOWM"
     #     post "Some title", "Some message"
     #   end
     class LightHouse < Base
-      # Post message to Lighthouse.
+      # Post message to LightHouse.
       #
-      #   post "Some nice title", "Hi Lighthouse!"
+      #   post "Some nice title", "Hi LightHouse!"
       def post(title, message)
         @uri = URI.parse("http://#{credentials[:subdomain]}.lighthouseapp.com/projects/#{credentials[:project]}/messages.json")
         http = Net::HTTP.new(uri.host, uri.port)
